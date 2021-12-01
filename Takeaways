@@ -1,0 +1,68 @@
+
+
+1. to implement front end using web3 steps:
+
+
+   * check if the injected provider in browser is metamask provider - window.ethereum or it is a web3 provider - window.web3, if none of these show error or recommend to
+   install metamask
+
+   * if metamask provider is detected, create window's web3 instance by providing metamask provider as arugument  - window.web3 = new web3(window.ethereum)
+
+   * if injected web3 provider is detected , create window's web3 instance by providing injected web3 as argument - window.web3 = new web3(window.web.currentProvider)
+
+   * check the network to which metamask is connected is the same network to which contract is deployed through network id property of metamask and contract's json file
+
+   * to get network id of metamask- await web3.eth.net.getId()
+
+   * to get network id of contract from json file (artifacts) - <name_of_json_file_variable>.networks[<network_id>]
+
+   here network id is a key of networks object and network id contains a object - {'address':' ', type:' '}
+
+   * if network are same , create an instance of contract using abi and contract address -
+   new web3(<name_of_json_file_variable>.abi, <name_of_json_file_variable>.networks[<network_id>]['address'])
+
+   here abi is a key-value property inside json file and address is a key-value property inside network id property which is inside networks key
+
+   * to call view and pure methods which do not change contract state using web3 - await <contract deployed instance>.methods.<method_name>.call()
+
+   * to call methods which change the contract's state using web3- await <contract deployed instance>.methods.<method_name>.send({from:<sender address>})
+
+
+   * to call view and pure methods which do not change contract state in deployment script or automation scripts or testing scripts -
+   await <contract deployed instance>.<method_name>(parameter1,parameter2,{from: <sender adddress>})
+
+   *to call methods which change the contract's state in deployment script or automation scripts or testing scripts
+    - await <contract deployed instance>.<method_name>(parameter1,parameter2, {from: <sender adddress>})
+
+   * In deployment script:
+
+     1. for deploying the contract we have deployer.deploy function - deployer.deploy(<artifacts of contract>)
+
+     2. to get an instance of deployed contract we have deployed() function  - <artifacts of contract>.deployed()
+
+     3. to import the artifacts of contract - artifacts.require('<contract name>')
+
+
+   *to get an instance of deployed contract in truffle console we have deployed() function  - <artifacts of contract>.deployed()
+
+   * In testing scripts
+
+     1. we have a single method to deploy the contract and get an instance of deployed contract called new() function - <artifacts of contract>.new()
+
+     2. to import the artifacts of contract - artifacts.require('<contract name>')
+
+
+   * the properties which you define inside component tag in App.js , can be accessed inside that component file using this.props.<property name>)
+
+   if you provide a property called tether balance inside the Nav tag - <Nav tetherBalance={this.state.tetherBalance}/>
+
+   then this property can be accessed inside Nav.js using this.props.tetherBalance
+
+
+   *to run scripts which are inside scripts folder individually inside truffle console - truffle exec scripts/<script_name>
+
+
+   * componentDiMount() functions executes automatically everytime the page opens / refreshes
+
+
+
